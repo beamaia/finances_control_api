@@ -1,0 +1,12 @@
+controler
+models
+    /database
+    /schemas
+    
+service
+
+ver pydantic
+deps (fica do lado da main)
+injecao de dependencias -> cria sessao
+fastAPI import Depends
+
