@@ -1,0 +1,50 @@
+version: '3.8'
+services:
+
+
+  # This is the configuration for our PostgreSQL database container
+  # Note the `postgres` name is important, in out Node app when we refer
+  # to  `host: "postgres"` that value is mapped on the network to the 
+  # address of this container.
+  postgres:
+    image: postgres:14.1-alpine
+    container_name: postgres
+    restart: always
+    environment:
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_PASSWORD=${DB_PASS}
+      - POSTGRES_USER=${DB_USER}
+    ports:
+      - "5432:5432"
+    networks:
+      - trident-net
+    volumes:
+      - db-volume:/var/lib/postgresql/data
+    
+
+  # These are the configurations for our Node app
+  # When Docker Compose starts this container it will automatically
+  # use the Dockerfile in the directory to configure it
+  app:
+    depends_on:
+      - postgres
+    restart: on-failure:5
+    build: 
+      dockerfile: Dockerfile
+      context: .
+    container_name: app
+    networks:
+      - trident-net
+    ports:
+      - 8080:8080
+      - 8008:8000
+    tty: true
+    stdin_open: true
+    volumes:
+      - ./:/usr/src/app/
+
+networks:
+  trident-net:
+    driver: bridge
+volumes:
+  db-volume:
