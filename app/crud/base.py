@@ -41,10 +41,12 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         self,
         db: Session,
         *,
-        db_obj: ModelType,
-        obj_in: Union[UpdateSchemaType, Dict[str, Any]]
+        obj_in: Union[UpdateSchemaType, Dict[str, Any]],
+        id: int
     ) -> ModelType:
+        db_obj = db.query(self.model).filter(ModelType.id == id).first()
         obj_data = jsonable_encoder(db_obj)
+
         if isinstance(obj_in, dict):
             update_data = obj_in
         else:
