@@ -6,28 +6,21 @@ from pydantic import BaseModel
 class DebitCardBase(BaseModel):
     name: str = None
     amount: float = 0
-    id: int
-
-    class Config:
-        orm_mode = True
 
 
 # Properties to receive on debit card creation
 class DebitCardCreate(DebitCardBase):
-    name: str
-    amount: float = 0
+    pass
 
 
 # Properties to receive on debit card update
 class DebitCardUpdate(DebitCardBase):
-    name: str
-    amount: float
+    name: Optional[str]
+    amount: Optional[float]
 
 
 # Properties shared by models stored in DB
 class DebitCardInDBBase(DebitCardBase):
-    name: str
-    amount: float
     id: int
 
     class Config:
@@ -36,9 +29,7 @@ class DebitCardInDBBase(DebitCardBase):
 
 # Properties to return to client
 class DebitCard(DebitCardInDBBase):
-    name: str
-    amount: float
-
+    pass
 
 # Properties properties stored in DB
 class DebitCardInDB(DebitCardInDBBase):
