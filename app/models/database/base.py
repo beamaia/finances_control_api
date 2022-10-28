@@ -17,4 +17,3 @@ session = Session()
 
 # create a base class for declarative class definitions
 Base = declarative_base()
-Base.metadata.create_all(engine)
