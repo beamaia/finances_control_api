@@ -3,6 +3,7 @@ from sqlalchemy import Column
 from sqlalchemy import Integer, String, Boolean, Numeric, Date
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import relationship
+from sqlalchemy.schema import UniqueConstraint
 
 from app.models.database.base import Base
 
@@ -11,6 +12,7 @@ class DebitCard(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String(50), nullable=False)
     amount = Column(Numeric(10,2), nullable=False)
+    UniqueConstraint('id', 'name')
 
     def __init__(self, name:str, amount:float):
         self.name = name
