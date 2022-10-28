@@ -5,8 +5,8 @@ from sqlalchemy import ForeignKey
 from sqlalchemy.orm import relationship
 
 from app.models.database.base import Base
-from app.models.database.models.category import Category
-from app.models.database.models.credit_card import CreditCard
+from app.models.database.category import Category
+from app.models.database.credit_card import CreditCard
 
 import datetime
 
