@@ -15,7 +15,7 @@ router = APIRouter()
 def create_debit_card(
     *,
     db: Session = Depends(deps.get_db),
-    debit_card_schema: schemas.debit_card.DebitCardCreate,
+    debit_card_schema: schemas.DebitCardCreate,
 ) -> Any:
     """
     Create new debit card.
@@ -24,24 +24,21 @@ def create_debit_card(
     return debit_card
 
 
-# @router.put("/{id}", response_model=schemas.Item)
-# def update_item(
-#     *,
-#     db: Session = Depends(deps.get_db),
-#     id: int,
-#     item_in: schemas.ItemUpdate,
-#     current_user: database.User = Depends(deps.get_current_active_user),
-# ) -> Any:
-#     """
-#     Update an item.
-#     """
-#     item = crud.item.get(db=db, id=id)
-#     if not item:
-#         raise HTTPException(status_code=404, detail="Item not found")
-#     if not crud.user.is_superuser(current_user) and (item.owner_id != current_user.id):
-#         raise HTTPException(status_code=400, detail="Not enough permissions")
-#     item = crud.item.update(db=db, db_obj=item, obj_in=item_in)
-#     return item
+@router.put("/{id}", response_model=schemas.Item)
+def update_debit_card(
+    *,
+    db: Session = Depends(deps.get_db),
+    id: int,
+    debit_card_obj: schemas.DebitCardUpdate,
+) -> Any:
+    """
+    Updates a debit card.
+    """
+    debit_card = crud.debit_card.get(db=db, id=id)
+    if not debit_card:
+        raise HTTPException(status_code=404, detail="Debit card not found")
+    debit_card = crud.debit_card.update(db=db, db_obj=debit_card, obj_in=debit_card_obj)
+    return debit_card
 
 
 @router.get("/{id}", response_model=schemas.debit_card.DebitCard)
