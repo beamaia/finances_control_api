@@ -1,5 +1,4 @@
 from typing import Any, List
-from app.models.database import debit_card
 
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
@@ -11,7 +10,7 @@ from app import deps
 router = APIRouter()
 
 
-@router.post("/", response_model=schemas.debit_card.DebitCard)
+@router.post("/", response_model=schemas.DebitCard)
 def create_debit_card(
     *,
     db: Session = Depends(deps.get_db),
@@ -24,12 +23,12 @@ def create_debit_card(
     return debit_card
 
 
-@router.put("/{id}", response_model=schemas.Item)
+@router.put("/{id}", response_model=schemas.DebitCardUpdate)
 def update_debit_card(
     *,
     db: Session = Depends(deps.get_db),
-    id: int,
     debit_card_obj: schemas.DebitCardUpdate,
+    id: int,
 ) -> Any:
     """
     Updates a debit card.
@@ -37,7 +36,8 @@ def update_debit_card(
     debit_card = crud.debit_card.get(db=db, id=id)
     if not debit_card:
         raise HTTPException(status_code=404, detail="Debit card not found")
-    debit_card = crud.debit_card.update(db=db, db_obj=debit_card, obj_in=debit_card_obj)
+     
+    debit_card = crud.debit_card.update(db=db, obj_in=debit_card_obj, id=id)
     return debit_card
 
 
