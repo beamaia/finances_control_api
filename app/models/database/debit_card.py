@@ -12,7 +12,7 @@ class DebitCard(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String(50), nullable=False)
     amount = Column(Numeric(10,2), nullable=False)
-    UniqueConstraint('id', 'name')
+    UniqueConstraint('name')
 
     def __init__(self, name:str, amount:float):
         self.name = name
