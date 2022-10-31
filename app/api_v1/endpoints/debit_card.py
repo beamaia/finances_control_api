@@ -36,11 +36,12 @@ def update_debit_card(
     debit_card = crud.debit_card.get(db=db, id=id)
     if not debit_card:
         raise HTTPException(status_code=404, detail="Debit card not found")
-     
+    
+    # TODO transform debit_card_obj to dict
     debit_card = crud.debit_card.update(db=db, obj_in=debit_card_obj, id=id)
     return debit_card
 
-
+# TODO add debit/
 @router.get("/{id}", response_model=schemas.debit_card.DebitCard)
 def read_debit_card(
     *,

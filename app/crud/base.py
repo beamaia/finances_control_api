@@ -47,7 +47,8 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
         db_obj = db.query(self.model).filter(self.model.id == id).first()
          
         obj_data = jsonable_encoder(db_obj)
-         
+        
+        # Corrigir pois antes tava certo
         if type(obj_in) is dict:
             update_data = obj_in
         else:
