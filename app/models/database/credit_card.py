@@ -16,12 +16,10 @@ class CreditCard(Base):
     best_day_date = Column(Date, nullable=False)
     due_date = Column(Date, nullable=False)
     max_limit = Column(Numeric(10,2), nullable=False)
-    total_limit_used = Column(Numeric(10,2), nullable=False)
 
-    def __init__(self, name:str, amount:float, best_day_date:datetime.date, due_date:datetime.date, max_limit:float, total_limit_used:float):
+    def __init__(self, name:str, amount:float, best_day_date:datetime.date, due_date:datetime.date, max_limit:float):
         self.name = name
         self.amount = amount
         self.best_day_date = best_day_date
         self.due_date = due_date
         self.max_limit = max_limit
-        self.total_limit_used = total_limit_used
