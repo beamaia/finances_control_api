@@ -1,31 +1,20 @@
 from typing import Optional
+import datetime
 
 from pydantic import BaseModel
 
-class DebitExtract(BaseModel):
-    debit_card_id: int
-    category_id: int
-    amount: float
-    date: str
-    description: str
-    if_realized: bool
-
-    class Config:
-        orm_mode = True
-
 # Shared properties
 class DebitExtractBase(BaseModel):
-    debit_card_id: int
-    category_id: int
     amount: float
-    date: str
-    description: Optional[str]
-    if_realized: bool
-    income: bool
+    date: Optional[str] = datetime.datetime.now()
+    description: Optional[str] = ""
+    if_realized: Optional[bool] = True
+    income: Optional[bool] = False
 
 # Properties to receive on debit extract creation
 class DebitExtractCreate(DebitExtractBase):
-    pass
+    debit_card_name: str
+    category_name: str
 
 
 # Properties to receive on debit extract update
