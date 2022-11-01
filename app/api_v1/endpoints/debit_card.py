@@ -10,7 +10,7 @@ from app import deps
 router = APIRouter()
 
 
-@router.post("/", response_model=schemas.DebitCard)
+@router.post("/debit_card/", response_model=schemas.DebitCard, tags=["Debit Card"])
 def create_debit_card(
     *,
     db: Session = Depends(deps.get_db),
@@ -23,7 +23,7 @@ def create_debit_card(
     return debit_card
 
 
-@router.put("/{id}", response_model=schemas.DebitCardUpdate)
+@router.put("/debit_card/{id}", response_model=schemas.DebitCardUpdate, tags=["Debit Card"])
 def update_debit_card(
     *,
     db: Session = Depends(deps.get_db),
@@ -37,12 +37,10 @@ def update_debit_card(
     if not debit_card:
         raise HTTPException(status_code=404, detail="Debit card not found")
     
-    # TODO transform debit_card_obj to dict
     debit_card = crud.debit_card.update(db=db, obj_in=debit_card_obj, id=id)
     return debit_card
 
-# TODO add debit/
-@router.get("/{id}", response_model=schemas.debit_card.DebitCard)
+@router.get("/debit_card/{id}", response_model=schemas.DebitCard, tags=["Debit Card"])
 def read_debit_card(
     *,
     db: Session = Depends(deps.get_db),
@@ -57,20 +55,18 @@ def read_debit_card(
     return debit_card
 
 
-# @router.delete("/{id}", response_model=schemas.Item)
-# def delete_item(
-#     *,
-#     db: Session = Depends(deps.get_db),
-#     id: int,
-#     current_user: database.User = Depends(deps.get_current_active_user),
-# ) -> Any:
-#     """
-#     Delete an item.
-#     """
-#     item = crud.item.get(db=db, id=id)
-#     if not item:
-#         raise HTTPException(status_code=404, detail="Item not found")
-#     if not crud.user.is_superuser(current_user) and (item.owner_id != current_user.id):
-#         raise HTTPException(status_code=400, detail="Not enough permissions")
-#     item = crud.item.remove(db=db, id=id)
-#     return item
+@router.delete("/debit_card/{id}", response_model=schemas.DebitCard, tags=["Debit Card"])
+def delete_debit_card(
+    *,
+    db: Session = Depends(deps.get_db),
+    id: int,
+) -> Any:
+    """
+    Delete a debit card.
+    """
+    debit_card = crud.debit_card.get(db=db, id=id)
+    if not debit_card:
+        raise HTTPException(status_code=404, detail="Debit card not found")
+
+    debit_card = crud.debit_card.remove(db=db, id=id)
+    return debit_card
