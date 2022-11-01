@@ -9,11 +9,10 @@ from app.models.database.debit_extract import DebitExtract
 
 
 class CrudDebitCard(CRUDBase[DebitExtract, DebitExtractCreate, DebitExtractUpdate]):
-    def get_filtered(self, db: Session, extract_dict: Any) -> List[DebitExtract]:
-        filtered_extract = db.query(self.model)
+    def get_filtered(self, db: Session, debit_id: int, extract_dict: Any) -> List[DebitExtract]:
+        filtered_extract = db.query(self.model).filter(self.model.debit_card_id == debit_id)
         for attr, value in extract_dict.items():
             filtered_extract = filtered_extract.filter(getattr(self.model, attr).like("%%%s%%" % value))
         return filtered_extract.all()
-
 
 debit_extract = CrudDebitCard(DebitExtract)
