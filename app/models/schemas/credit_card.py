@@ -1,15 +1,14 @@
 from typing import Optional
+import datetime
 
 from pydantic import BaseModel
 
 class CreditCard(BaseModel):
     name: str
     amount: float
-    best_day_date: str
-    due_date: str
+    best_day_date: datetime.date
+    due_date: datetime.date
     max_limit: float
-    total_limit_used: float
-    id: int
 
     class Config:
         orm_mode = True
@@ -19,10 +18,9 @@ class CreditCard(BaseModel):
 class CreditCardBase(BaseModel):
     name: str = None
     amount: float = 0
-    best_day_date: str
-    due_date: str
+    best_day_date: datetime.date
+    due_date: datetime.date
     max_limit: float
-    total_limit_used: float
 
 
 # Properties to receive on credit card creation
@@ -34,10 +32,9 @@ class CreditCardCreate(CreditCardBase):
 class CreditCardUpdate(CreditCardBase):
     name: Optional[str]
     amount: Optional[float]
-    best_day_date: Optional[str]
-    due_date: Optional[str]
+    best_day_date: Optional[datetime.date]
+    due_date: Optional[datetime.date]
     max_limit: Optional[float]
-    total_limit_used: Optional[float]
 
 
 # Properties shared by models stored in DB
