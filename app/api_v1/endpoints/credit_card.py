@@ -40,7 +40,6 @@ def update_credit_card(
     credit_card = crud.credit_card.update(db=db, obj_in=credit_card_obj, id=id)
     return credit_card
 
-# TODO add debit/
 @router.get("/credit_card/{id}", response_model=schemas.CreditCard, tags=["Credit Card"])
 def read_credit_card(
     *,

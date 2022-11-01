@@ -40,7 +40,6 @@ def update_category(
     category = crud.category.update(db=db, obj_in=category_obj, id=id)
     return category
 
-# TODO add debit/
 @router.get("/category/{id}", response_model=schemas.Category, tags=["Category"])
 def read_category(
     *,
