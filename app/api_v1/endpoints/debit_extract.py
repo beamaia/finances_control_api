@@ -9,8 +9,8 @@ from app import deps
 
 router = APIRouter()
 
-
-@router.post("/extract/", response_model=schemas.DebitExtractCreate, tags=["Debit Extract"])
+# TODO param not showing up
+@router.post("/extract/{debit_id}", response_model=List[schemas.DebitExtract], tags=["Debit Extract"])
 def create_debit_extract(
     *,
     db: Session = Depends(deps.get_db),
@@ -19,5 +19,5 @@ def create_debit_extract(
     """
     Create new debit extract.
     """
-    debit_extract = crud.debit_extract.create(db=db, obj_in=debit_extract_schema)
+    debit_extract = crud.debit_extract.create(db=db, debit_id = debit_id, obj_in=debit_extract_schema)
     return debit_extract
